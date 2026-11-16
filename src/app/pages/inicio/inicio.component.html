@@ -1,0 +1,37 @@
+<!-- Bienvenida -->
+<section class="hero" aria-labelledby="titulo-principal">
+  <div class="hero-texto">
+    <span class="etiqueta">Tu salud en buenas manos</span>
+    <h1 id="titulo-principal">Reserva tu hora médica en minutos.</h1>
+    <p>En MediCare conectamos a pacientes con especialistas. Medicina general, pediatría, dental y kinesiología en un mismo lugar.</p>
+    <a class="boton boton-claro" routerLink="/" fragment="especialidades">Ver especialidades →</a>
+    <div class="contenedor-consejo">
+      <button class="btn btn-warning fw-bold mt-3" type="button"
+              [attr.aria-pressed]="mostrarConsejo" (click)="alternarConsejo()">
+        {{ mostrarConsejo ? 'Ocultar consejo' : 'Mostrar un consejo' }}
+      </button>
+      <p *ngIf="mostrarConsejo" class="consejo-dom">{{ consejo }}</p>
+    </div>
+  </div>
+  <div class="hero-figura" aria-hidden="true">🏥</div>
+</section>
+
+<!-- Especialidades disponibles: una sola tarjeta repetida con *ngFor -->
+<section class="contenido" id="especialidades" aria-labelledby="titulo-especialidades">
+  <div class="seccion-encabezado">
+    <span class="etiqueta">Nuestras especialidades</span>
+    <h2 id="titulo-especialidades">Elige tu especialidad</h2>
+  </div>
+  <div class="rejilla-categorias row g-4">
+    <div *ngFor="let e of especialidades" class="col-12 col-md-6 col-lg-3">
+      <article class="tarjeta h-100 categoria">
+        <img [src]="e.imagen" [alt]="'Especialidad ' + e.nombre" loading="lazy">
+        <div class="tarjeta-contenido">
+          <h3>{{ e.nombre }}</h3>
+          <p>{{ e.descripcion }}</p>
+          <a class="boton" [routerLink]="['/especialidad', e.slug]">Ver servicios →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

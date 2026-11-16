@@ -1,0 +1,5 @@
+/* El host es el elemento <app-servicio-tarjeta>: lo estiramos para que h-100 funcione */
+:host {
+  display: block;
+  height: 100%;
+}

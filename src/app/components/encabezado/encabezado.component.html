@@ -1,0 +1,22 @@
+<!-- Encabezado con menú responsivo (antes copiado en los 13 HTML) -->
+<header class="encabezado navbar navbar-expand-lg">
+  <div class="container-fluid cabecera-interior">
+    <a class="marca navbar-brand" routerLink="/" aria-label="Ir al inicio de MediCare">
+      <span class="marca-logo" aria-hidden="true">🏥</span>
+      <span>Medi<span class="marca-acento">Care</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal" aria-controls="menuPrincipal"
+            aria-expanded="false" aria-label="Mostrar u ocultar menú">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <nav class="navegacion collapse navbar-collapse" id="menuPrincipal" aria-label="Navegación principal">
+      <div class="navbar-nav ms-lg-auto">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        <a *ngFor="let e of especialidades" class="nav-link"
+           [routerLink]="['/especialidad', e.slug]" routerLinkActive="active">{{ e.nombre }}</a>
+        <a class="nav-link" routerLink="/registro" routerLinkActive="active">Registro</a>
+      </div>
+    </nav>
+  </div>
+</header>

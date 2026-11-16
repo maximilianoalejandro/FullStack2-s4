@@ -53,9 +53,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -64,8 +62,12 @@
               }
             ],
             "styles": [
+              "public/assets/vendor/bootstrap.min.css",
+              "src/styles-medicare.css",
+              "src/styles-s3.css",
               "src/styles.css"
-            ]
+            ],
+            "scripts": ["public/assets/vendor/bootstrap.bundle.min.js"]
           },
           "configurations": {
             "production": {

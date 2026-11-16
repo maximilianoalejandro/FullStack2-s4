@@ -1,0 +1,181 @@
+/* ============================================================
+   MediCare · Estilos de las pantallas con sesión y roles.
+   Se cargan DESPUÉS de styles.css. No reemplazan nada anterior,
+   solo agregan los estilos de login, perfil, reservas, historial
+   y administración. Respetan la paleta verde/cian del sitio.
+   ============================================================ */
+
+/* Zona general de las pantallas nuevas. */
+.zona-sesion { max-width: 1260px; margin: auto; padding: 48px 24px 70px; }
+.zona-sesion > h1 { color: var(--verde); font-size: clamp(28px, 3.6vw, 40px); margin: 0 0 8px; }
+.zona-sesion > p.intro { color: var(--texto); max-width: 760px; margin-bottom: 26px; }
+
+/* Panel con tarjeta blanca reutilizable. */
+.panel {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 28px;
+}
+.panel h2 { color: var(--verde); margin-top: 0; }
+.panel h3 { color: var(--verde); }
+
+/* Formularios dentro de los paneles. */
+.panel .form-label { color: var(--texto); font-weight: 600; }
+.panel .form-control:focus,
+.panel .form-select:focus {
+  border-color: var(--verde-medio);
+  box-shadow: 0 0 0 .2rem rgba(21,155,134,.25);
+}
+.panel .form-control.is-valid { border-color: var(--verde-medio); }
+.panel .form-control.is-invalid { border-color: #d9534f; }
+
+/* Botón primario con el verde del sitio. */
+.btn-medi {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+}
+.btn-medi:hover { background: var(--verde-medio); border-color: var(--verde-medio); color: #fff; }
+.btn-acento {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #3a1206;
+}
+.btn-acento:hover { background: #ff9b82; border-color: #ff9b82; color: #3a1206; }
+
+/* Mensajes con aria-live. */
+.mensaje-ok { color: #0f5a3c; font-weight: 700; }
+.mensaje-error, .error { color: #b02a37; font-weight: 700; }
+
+/* Credenciales de demostración (login). */
+.credencial {
+  border: 1px dashed var(--borde);
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: #f3f8f8;
+}
+.credencial code { color: var(--verde); font-weight: 700; }
+
+/* Aviso de proyecto ficticio. */
+.aviso {
+  background: #e2f2ef;
+  border-left: 4px solid var(--acento);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: var(--texto);
+  font-size: 14px;
+}
+
+/* Enlaces del menú propios de la sesión (reservas, historial, perfil...). */
+.navbar .navegacion a.enlace-sesion { color: var(--verde); }
+.navbar .navegacion a.enlace-admin { color: var(--verde-medio); }
+
+/* Igualar "Acceder" (enlace) y "Salir" (botón) para que midan lo mismo.
+   Comparten altura, padding vertical, borde y tipografía; solo cambia el
+   color (acento sólido vs. contorno). Se neutraliza el btn-sm de "Salir". */
+.navbar .navegacion a.enlace-registro,
+.navbar .navegacion #cerrarSesion {
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  align-self: center;
+}
+/* "Acceder": relleno con el color acento del sitio. */
+.navbar .navegacion a.enlace-registro {
+  background: var(--acento);
+  color: #3a1206;
+}
+.navbar .navegacion a.enlace-registro:hover { background: #ff9b82; color: #3a1206; }
+/* "Salir": mismo tamaño pero de contorno, para diferenciar la acción. */
+.navbar .navegacion #cerrarSesion {
+  background: transparent;
+  border-color: var(--acento);
+  color: var(--acento);
+}
+.navbar .navegacion #cerrarSesion:hover { background: var(--acento); color: #3a1206; }
+
+/* Indicador de estado de sesión: NO es un enlace, es una etiqueta.
+   Se separa del resto del menú con un borde a la izquierda y una píldora. */
+#sesionActual {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  margin-left: 14px;
+  padding: 5px 12px;
+  border-radius: 50px;
+  background: #e2f2ef;
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* Separador vertical en pantallas grandes para despegarlo de los enlaces. */
+@media (min-width: 992px) {
+  #sesionActual { border-left: 1px solid var(--borde); padding-left: 16px; border-radius: 0 50px 50px 0; }
+}
+/* En móvil (menú desplegado en columna) se muestra como bloque, sin solaparse. */
+@media (max-width: 991px) {
+  #sesionActual { margin: 8px 0 0; border-left: none; }
+}
+
+/* Tablas de administración e historial. */
+.tabla-datos { overflow-x: auto; }
+.tabla-datos table { width: 100%; }
+.tabla-datos caption { caption-side: top; color: var(--texto); font-weight: 700; padding-bottom: 8px; }
+.tabla-datos thead th { color: var(--verde); }
+
+/* Fila de registro en mantenedores (clientes/usuarios). */
+.registro-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  background: #fbfdfd;
+}
+
+/* Lista del carrito/reservas. */
+.lista-reservas .list-group-item { border-color: var(--borde); }
+
+/* Badge de estado de una reserva. */
+.estado-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #e3f6ef;
+  color: #0f5a3c;
+}
+.estado-badge.pendiente { background: #fff3cd; color: #7a5b00; }
+
+/* Pantalla de confirmación / pago simulado. */
+.confirmacion-ok {
+  text-align: center;
+  padding: 40px 24px;
+}
+.confirmacion-ok .icono {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+/* Rejilla de paneles en dos columnas para pantallas grandes. */
+.grid-paneles { display: grid; gap: 22px; }
+@media (min-width: 992px) {
+  .grid-paneles.dos { grid-template-columns: 1fr 1fr; }
+}

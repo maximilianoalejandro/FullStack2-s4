@@ -1,0 +1,43 @@
+<ng-container *ngIf="servicio && especialidad; else noEncontrado">
+  <section class="subhero">
+    <a class="volver" [routerLink]="['/especialidad', especialidad.slug]">← Volver a {{ especialidad.nombre }}</a>
+    <span class="etiqueta">{{ especialidad.nombre }} / Servicio</span>
+    <h1>{{ servicio.icono }} {{ servicio.nombre }}</h1>
+    <p>{{ servicio.descripcion }}</p>
+  </section>
+
+  <section class="contenido" aria-label="Detalle del servicio">
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <article class="tarjeta h-100">
+          <div class="tarjeta-contenido">
+            <span *ngIf="servicio.conDescuento" class="descuento">Con descuento</span>
+            <span *ngIf="!servicio.conDescuento" class="sin-descuento">Sin descuento</span>
+            <h2>{{ servicio.nombre }}</h2>
+            <p>{{ servicio.descripcion }}</p>
+            <p class="precio">{{ precio(servicio.precio) }}</p>
+          </div>
+        </article>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="panel h-100">
+          <h2 class="h4">Profesionales de {{ especialidad.nombre }}</h2>
+          <ul class="list-group">
+            <li *ngFor="let p of profesionales" class="list-group-item d-flex justify-content-between">
+              <span>{{ p.nombre }}</span>
+              <strong>{{ precio(p.valor) }}</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #noEncontrado>
+  <section class="subhero">
+    <a class="volver" routerLink="/">← Volver al inicio</a>
+    <h1>Servicio no encontrado</h1>
+    <p>El servicio que buscas no existe.</p>
+  </section>
+</ng-template>

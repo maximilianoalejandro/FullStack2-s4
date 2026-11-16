@@ -1,0 +1,11 @@
+<article class="tarjeta h-100 servicio">
+  <div class="media" aria-hidden="true">{{ servicio.icono }}</div>
+  <div class="tarjeta-contenido">
+    <span *ngIf="servicio.conDescuento" class="descuento">Con descuento</span>
+    <span *ngIf="!servicio.conDescuento" class="sin-descuento">Sin descuento</span>
+    <h3>{{ servicio.nombre }}</h3>
+    <p>{{ servicio.descripcion }}</p>
+    <p class="precio">{{ precioTexto() }}</p>
+    <a class="boton" [routerLink]="['/servicio', servicio.id]">Ver detalle →</a>
+  </div>
+</article>
