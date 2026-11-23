@@ -8,50 +8,87 @@
 <section class="contenido registro-contenido" aria-labelledby="titulo-registro">
   <div class="panel-registro">
     <h2 id="titulo-registro">Formulario de registro</h2>
-    <p>La dirección es opcional.</p>
+    <p>Todos los campos son obligatorios, excepto la dirección.</p>
 
-    <form (ngSubmit)="registrar()">
+    <form [formGroup]="formulario" (ngSubmit)="registrar()" novalidate>
       <div class="row g-4">
         <div class="col-12 col-lg-6">
           <label for="nombre" class="form-label fw-semibold">Nombre completo</label>
-          <input id="nombre" name="nombre" type="text" class="form-control"
+          <input id="nombre" type="text" class="form-control" formControlName="nombre"
                  placeholder="Escribe tu nombre y apellido" autocomplete="name"
-                 [(ngModel)]="paciente.nombre">
+                 [class.is-invalid]="invalido('nombre')">
+          <div *ngIf="invalido('nombre')" class="text-danger small mt-1">
+            El nombre es obligatorio.
+          </div>
         </div>
+
         <div class="col-12 col-lg-6">
           <label for="usuario" class="form-label fw-semibold">Nombre de usuario</label>
-          <input id="usuario" name="usuario" type="text" class="form-control"
+          <input id="usuario" type="text" class="form-control" formControlName="usuario"
                  placeholder="Ejemplo: paciente2026" autocomplete="username"
-                 [(ngModel)]="paciente.usuario">
+                 [class.is-invalid]="invalido('usuario')">
+          <div *ngIf="invalido('usuario')" class="text-danger small mt-1">
+            El nombre de usuario es obligatorio.
+          </div>
         </div>
+
         <div class="col-12 col-lg-6">
           <label for="correo" class="form-label fw-semibold">Correo electrónico</label>
-          <input id="correo" name="correo" type="email" class="form-control"
+          <input id="correo" type="email" class="form-control" formControlName="correo"
                  placeholder="nombre@ejemplo.cl" autocomplete="email"
-                 [(ngModel)]="paciente.correo">
+                 [class.is-invalid]="invalido('correo')">
+          <div *ngIf="invalido('correo')" class="text-danger small mt-1">
+            <ng-container *ngIf="tieneError('correo', 'required'); else formatoCorreo">
+              El correo es obligatorio.
+            </ng-container>
+            <ng-template #formatoCorreo>Ingresa un correo válido, por ejemplo nombre&#64;ejemplo.cl.</ng-template>
+          </div>
         </div>
+
         <div class="col-12 col-lg-6">
           <label for="clave" class="form-label fw-semibold">Contraseña</label>
-          <input id="clave" name="clave" type="password" class="form-control"
-                 placeholder="Escribe una contraseña de prueba" autocomplete="new-password"
-                 [(ngModel)]="paciente.clave">
+          <input id="clave" type="password" class="form-control" formControlName="clave"
+                 placeholder="6 a 18 caracteres, una mayúscula y un número"
+                 autocomplete="new-password" [class.is-invalid]="invalido('clave')">
+          <div *ngIf="invalido('clave')" class="text-danger small mt-1">
+            <div *ngIf="tieneError('clave', 'required')">La contraseña es obligatoria.</div>
+            <div *ngIf="tieneError('clave', 'minlength')">Debe tener al menos 6 caracteres.</div>
+            <div *ngIf="tieneError('clave', 'maxlength')">Debe tener como máximo 18 caracteres.</div>
+            <div *ngIf="tieneError('clave', 'sinMayuscula')">Debe incluir al menos una mayúscula.</div>
+            <div *ngIf="tieneError('clave', 'sinNumero')">Debe incluir al menos un número.</div>
+          </div>
         </div>
+
         <div class="col-12 col-lg-6">
           <label for="repeticion" class="form-label fw-semibold">Repetir contraseña</label>
-          <input id="repeticion" name="repeticion" type="password" class="form-control"
+          <input id="repeticion" type="password" class="form-control" formControlName="repeticion"
                  placeholder="Escribe nuevamente tu contraseña" autocomplete="new-password"
-                 [(ngModel)]="paciente.repeticion">
+                 [class.is-invalid]="invalido('repeticion') || (formulario.hasError('clavesDistintas') && formulario.get('repeticion')?.touched)">
+          <div *ngIf="invalido('repeticion')" class="text-danger small mt-1">
+            Debes repetir la contraseña.
+          </div>
+          <div *ngIf="formulario.hasError('clavesDistintas') && formulario.get('repeticion')?.touched"
+               class="text-danger small mt-1">
+            Las contraseñas no coinciden.
+          </div>
         </div>
+
         <div class="col-12 col-lg-6">
           <label for="nacimiento" class="form-label fw-semibold">Fecha de nacimiento</label>
-          <input id="nacimiento" name="nacimiento" type="date" class="form-control"
-                 autocomplete="bday" [(ngModel)]="paciente.nacimiento">
+          <input id="nacimiento" type="date" class="form-control" formControlName="nacimiento"
+                 autocomplete="bday" [class.is-invalid]="invalido('nacimiento')">
+          <div *ngIf="invalido('nacimiento')" class="text-danger small mt-1">
+            <div *ngIf="tieneError('nacimiento', 'required')">La fecha de nacimiento es obligatoria.</div>
+            <div *ngIf="tieneError('nacimiento', 'fechaInvalida')">Ingresa una fecha válida.</div>
+            <div *ngIf="tieneError('nacimiento', 'fechaFutura')">La fecha no puede ser futura.</div>
+            <div *ngIf="tieneError('nacimiento', 'edadMinima')">Debes tener al menos 13 años para registrarte.</div>
+          </div>
         </div>
+
         <div class="col-12">
-          <label for="direccion" class="form-label fw-semibold">Dirección de contacto (opcional)</label>
-          <input id="direccion" name="direccion" type="text" class="form-control"
-                 placeholder="Calle, número, comuna" autocomplete="street-address"
-                 [(ngModel)]="paciente.direccion">
+          <label for="direccion" class="form-label fw-semibold">Dirección de despacho (opcional)</label>
+          <input id="direccion" type="text" class="form-control" formControlName="direccion"
+                 placeholder="Calle, número, comuna" autocomplete="street-address">
         </div>
       </div>
 
@@ -61,21 +98,13 @@
       </div>
     </form>
 
-    <!-- Se muestra solo después de enviar (*ngIf) y refleja lo escrito (ngModel) -->
-    <div *ngIf="enviado" class="estado-formulario mt-4" role="status" aria-live="polite">
-      <strong>Datos recibidos (demostración):</strong>
-      <ul class="mb-0">
-        <li>Nombre: {{ paciente.nombre || '—' }}</li>
-        <li>Usuario: {{ paciente.usuario || '—' }}</li>
-        <li>Correo: {{ paciente.correo || '—' }}</li>
-        <li>Fecha de nacimiento: {{ paciente.nacimiento || '—' }}</li>
-        <li>Dirección: {{ paciente.direccion || '—' }}</li>
-      </ul>
+    <div class="estado-formulario mt-4" [class.exito]="enviado" role="status" aria-live="polite">
+      {{ mensaje }}
     </div>
   </div>
 
   <aside class="nota-registro mt-4">
     <h3>Nota</h3>
-    <p>Este formulario no valida ni guarda los datos. Es un trabajo del ramo.</p>
+    <p>Este formulario valida los datos, pero no los guarda. Es un trabajo del ramo.</p>
   </aside>
 </section>
